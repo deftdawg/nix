@@ -124,6 +124,7 @@ public:
             auto state(state_.lock());
             if (state->active) {
                 state->active = false;
+                setWindowTitle("nix: done");
                 writeToStderr("\r\e[K");
                 updateCV.notify_one();
                 quitCV.notify_one();
@@ -179,6 +180,9 @@ public:
     void logEI(const ErrorInfo & ei) override
     {
         auto state(state_.lock());
+
+        if (ei.level <= lvlError)
+            setWindowTitle(fmt("nix: error (status: %d)", ei.status));
 
         std::ostringstream oss;
         showErrorInfo(oss, ei, loggerSettings.showTrace.get());
@@ -460,6 +464,7 @@ public:
         if (width <= 0)
             width = std::numeric_limits<decltype(width)>::max();
 
+        setWindowTitle("nix: " + filterANSIEscapes(line, true));
         redraw("\r" + filterANSIEscapes(line, false, width) + ANSI_NORMAL + "\e[K");
 
         return nextWakeup;
