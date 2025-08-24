@@ -59,6 +59,8 @@ perl.pkgs.toPerlModule (
 
     nativeCheckInputs = [
       perlPackages.Test2Harness
+      perlPackages.DBI
+      perlPackages.DBDSQLite
     ];
 
     preConfigure =
