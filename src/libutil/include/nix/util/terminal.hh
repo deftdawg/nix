@@ -36,4 +36,10 @@ void updateWindowSize();
  */
 std::pair<unsigned short, unsigned short> getWindowSize();
 
+/**
+ * @brief setWindowTitle sets the terminal window title
+ * @param title the string to set the title to
+ */
+void setWindowTitle(const std::string & title);
+
 } // namespace nix

@@ -176,4 +176,10 @@ std::pair<unsigned short, unsigned short> getWindowSize()
     return *windowSize.lock();
 }
 
+void setWindowTitle(const std::string & title)
+{
+    if (isTTY())
+        fprintf(stderr, "\033]0;%s\007", title.c_str());
+}
+
 } // namespace nix
